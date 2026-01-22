@@ -9,9 +9,11 @@
 using namespace std;
 
 vector<string>tasks;
+int num{};
 void addTask(string task);
 void viewTask();
 void markDone();
+void del(int delet);
 
 int main() {
     cout << "Please enter a number to perform a task:\n 1. Add Task \n 2. View Task \n 3. Mark task as done \n 4. Delete Task \n 5. Exit \n\n";
@@ -38,6 +40,12 @@ int main() {
         else if (number == 3) {
             markDone();
         }
+        else if (number == 4) {
+            cout << "Enter the task you wish to delete ";
+            int deleteTask{};
+            cin >> deleteTask;
+            del(deleteTask);
+        }
         cin >> number;
     } while (number != 5);
 
@@ -54,7 +62,7 @@ void addTask(string task) {
 
 void viewTask() {
     cout << format("{:>5} {:>10}\n", "No.", "Task");
-    for (int i{ 0 }; i < tasks.size(); i++) {
+    for (int i{}; i < tasks.size()-1; i++) {
         cout << format("{:>5} {:>10}\n", i + 1, tasks[i]);
     }
 }
@@ -63,30 +71,27 @@ void markDone() {
     bool isMarked{};
     cout << "Enter the index number of the task you want wish to mark\n ";
     cout << format("{:>5} {:>10} {:>15}\n", "No.", "Task", "Marked");
-    for (int i{}; i < tasks.size(); i++) {
+    for (int i{}; i < tasks.size()-1; i++) {
         cout << format("{:>5} {:>10} {:>15}\n", i + 1, tasks[i], isMarked);
     }
-    int num{};
     cin >> num;
     if (num <= 0 or num > tasks.size()) {
         cout << format("Enter the a number between 1 to {}", tasks.size()) ;
     }
     else {
         cout << format("{:>5} {:>10} {:>15}\n", "No.", "Task", "Marked");
-        for (int i{}; i < tasks.size(); i++) {
-            if (num == i + 1)
+        for (int i{}; i < tasks.size() - 1; i++) {
+            if (i == num - 1) {
                 isMarked = true;
+            }
+            else {
+                isMarked = false;
+            }
             cout << format("{:>5} {:>10} {:>15}\n", i + 1, tasks[i], isMarked);
         }
     }
 }
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+void del(int delet) {
+    tasks[delet] = "";
+}
