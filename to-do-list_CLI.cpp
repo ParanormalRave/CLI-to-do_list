@@ -1,50 +1,61 @@
 // to-do-list_CLI.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
-//#include <string>
+#include <format>
 #include <vector>
+#include <cctype>
 using namespace std;
 
 vector<string>tasks;
 void addTask(string task);
+void viewTask();
+void markDone();
 
 int main(){
     cout <<  "Please enter a number to perform a task:\n 1. Add Task \n 2. View Task \n 3. Mark task as done \n 4. Delete Task \n 5. Exit \n\n";
     int number{};
     cin >> number;
-
-    //switch (number) {
-
-    //case 1:
-    //    cin >> task;
-    //    addTask(task);
-    //    break;
-    //case 2:
-
-    //    break;
-    //case 3:
-
-    //    break;
-    //case 4:
-
-    //    break;
-    //default:
-    //    cout << 'hmm';
-    //}
-
-   if (number == 1) {
-       cout << "Enter the task \n";
-       string task;
-       cin >> task;
-       addTask(task);
-   }
+    
+    do {
+        if (number == 1) {
+            string task;
+            do {
+                cout << "Enter the task\n Or Enter exit to quit adding tasks\n";
+                cin >> task;
+                addTask(task);
+            } while ((task) != "exit");
+            cout << "Enter 5 to exit operation";
+        }else if(number == 2){
+            int view{};
+            cin >> view;
+            viewTask();
+        }
+        else if (number == 3) {
+            markDone();
+        }
+        cin >> number;
+    } while (number != 5);
+    
     return 0;
 }
 
 void addTask(string task) {
+    if (task == "exit") {
+        cout << "You have successfully added tasks";
+    }
     tasks.push_back(task);
-    cout << "You have successfully added a task";
+    cout << "You have successfully added a task\n";
+}
+
+void viewTask() {
+    cout << format("{:>5} {:>10}\n", "No.", "Task");
+    for (int i{0}; i < tasks.size(); i++) {
+        cout << format("{:>5} {:>10}\n", i+1, tasks[i] );
+    }
+}
+
+void markDone() {
+
 }
 // Run program: Ctrl + F5 or Debug > S
 // Tips for Getting Started: 
