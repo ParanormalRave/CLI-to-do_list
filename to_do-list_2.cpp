@@ -93,5 +93,8 @@ void markDone() {
 }
 
 void del(int delet) {
-    tasks[delet] = "";
+    viewTask();
+    tasks.erase(tasks.begin() + delet-1);
+    viewTask();
+
 }
