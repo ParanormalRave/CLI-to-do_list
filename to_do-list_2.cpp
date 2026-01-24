@@ -6,9 +6,11 @@
 #include <vector>
 #include <string>
 #include <cctype>
+#include <fstream>
 using namespace std;
 
 vector<string>tasks;
+ofstream taskfile("tasksfile.txt");
 int num{};
 void addTask(string task);
 void viewTask();
@@ -26,6 +28,7 @@ int main() {
             do {
                 cout << "Enter the task\n Or Enter exit to quit adding tasks\n";
                 cin >> task;
+                taskfile << task;
                 //getline(cin,task);
                 addTask(task);
             } while ((task) != "exit");
@@ -35,7 +38,7 @@ int main() {
             int view{};
             cin >> view;
             viewTask();
-
+            taskfile << view;
         }
         else if (number == 3) {
             markDone();
@@ -58,9 +61,11 @@ void addTask(string task) {
     }
     tasks.push_back(task);
     cout << "You have successfully added a task\n";
+    cout << "\033[33mYay\033[0m\n";
 }
 
 void viewTask() {
+
     cout << format("{:>5} {:>10}\n", "No.", "Task");
     for (int i{}; i < tasks.size()-1; i++) {
         cout << format("{:>5} {:>10}\n", i + 1, tasks[i]);
@@ -88,6 +93,8 @@ void markDone() {
                 isMarked = false;
             }
             cout << format("{:>5} {:>10} {:>15}\n", i + 1, tasks[i], isMarked);
+            taskfile << format("{:>5} {:>10} {:>15}\n", i + 1, tasks[i], isMarked);
+            taskfile.close();
         }
     }
 }
